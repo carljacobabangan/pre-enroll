@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Enrollment</title>
+    <link rel="stylesheet" href="header.css">
+    <style>
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        html,
+        body {
+            overscroll-behavior: none;
+        }
+
+        #mainContainer {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        #formContainer {
+            background-color: #00703C;
+        }
+
+        #formBox {
+            display: flex;
+            margin: auto;
+        }
+
+        #rightForm,
+        #leftForm,
+        #balikAralRight,
+        #balikAralLeft,
+        #shsRight,
+        #shsLeft {
+            margin: 10px 0 0 30px;
+            width: 50%;
+            flex: 1;
+            min-width: 30%;
+        }
+
+        label {
+            color: #00703C;
+        }
+
+        #rightForm input[type=text],
+        #rightForm input[type=number],
+        #leftForm input[type=text],
+        #leftForm input[type=number],
+        #rightForm input[type=date],
+        #addressRight input[type=text],
+        #addressRight input[type=number],
+        #addressLeft input[type=text],
+        #addressLeft input[type=number],
+        #balikAralRight input[type=text],
+        #balikAralRight input[type=number],
+        #balikAralLeft input[type=text],
+        #balikAralLeft input[type=number],
+        #shsRight input[type=text],
+        #shsRight input[type=number] {
+            width: 100%;
+            max-width: 100%;
+            border: 1px solid #00703C;
+            border-radius: 5px;
+            padding: 8px 12px;
+            background-color: #d9d9d9;
+            transition: linear 0.5s;
+        }
+
+        #rightForm input[type=text]:focus,
+        #rightForm input[type=number]:focus,
+        #leftForm input[type=text]:focus,
+        #leftForm input[type=number]:focus,
+        #rightForm input[type=date]:focus,
+        #addressRight input[type=text]:focus,
+        #addressRight input[type=number]:focus,
+        #addressLeft input[type=text]:focus,
+        #addressLeft input[type=number]:focus,
+        #balikAralRight input[type=text]:focus,
+        #balikAralRight input[type=number]:focus,
+        #balikAralLeft input[type=text]:focus,
+        #balikAralLeft input[type=number]:focus,
+        #shsRight input[type=text]:focus,
+        #shsRight input[type=number]:focus {
+            background-color: #ccc;
+            outline: none;
+        }
+
+        /* AGE AND SEX CSS */
+        .age-sex-row {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .age-field,
+        .sex-field {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .age-field input {
+            width: 100%;
+        }
+
+        /* RADIO CSS*/
+        .radioContainer {
+            display: inline-block;
+            position: relative;
+            padding-right: 10px;
+            padding-left: 35px;
+            padding-top: 3px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* Hide the browser's default radio button */
+        .radioContainer input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom radio button */
+        .radio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #a6a6a6;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .radioContainer:hover input~.radio {
+            background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .radioContainer input:checked~.radio {
+            background-color: #00703C;
+            transition: ease 0.3s;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .radio:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radioContainer input:checked~.radio:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .radioContainer .radio:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #F5F1F1;
+        }
+
+        /* CHECK BOX CSS */
+        /* The container */
+        .checkBoxcontainer {
+            display: block;
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* Hide the browser's default checkbox */
+        .checkBoxcontainer input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            transition: ease 0.3s;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .checkBoxcontainer:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .checkBoxcontainer input:checked~.checkmark {
+            background-color: #00703C;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .checkBoxcontainer input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkBoxcontainer .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        #disabilityContainer {
+            display: flex;
+        }
+
+        #rightCheckBox {
+            width: 50%;
+        }
+
+        #leftCheckBox {
+            width: 50%;
+        }
+
+        .optionBox {
+            margin: 20px;
+            display: none;
+        }
+
+        .optionBox.active {
+            display: block;
+        }
+
+        #buttonBox button {
+            background-color: #00703C;
+            color: white;
+            padding: 10px 20px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            float: right;
+            margin: 20px 30px 20px auto;
+            font-size: larger;
+            cursor: pointer;
+            transition: linear 0.5s;
+        }
+
+        #buttonBox button:hover {
+            background-color: #008849;
+        }
+
+        #addressBox {
+            display: flex;
+        }
+
+        #addressRight {
+            margin: 10px 0 0 30px;
+            width: 50%;
+        }
+
+        #addressLeft {
+            margin: 10px 0 0 30px;
+            width: 50%;
+        }
+
+        #fatherContainer,
+        #motherContainer,
+        #gurdianContainer,
+        #balikAralContainer,
+        #shsContainer {
+            display: flex;
+        }
+
+        #fatherRight,
+        #fatherLeft,
+        #motherRight,
+        #motherLeft,
+        #gurdianRight,
+        #gurdianLeft {
+            margin: 10px 0 0 100px;
+            width: 50%;
+        }
+
+        #fatherRight input[type=text],
+        #fatherRight input[type=number],
+        #fatherLeft input[type=text],
+        #fatherLeft input[type=number],
+        #motherRight input[type=text],
+        #motherRight input[type=number],
+        #motherLeft input[type=text],
+        #motherLeft input[type=number],
+        #gurdianRight input[type=text],
+        #gurdianRight input[type=number],
+        #gurdianLeft input[type=text],
+        #gurdianLeft input[type=number] {
+            width: 430px;
+            border: 1px solid #00703C;
+            border-radius: 5px;
+            padding: 8px 12px;
+            background-color: #d9d9d9;
+            transition: linear 0.5s;
+        }
+
+        #fatherRight input[type=text]:focus,
+        #fatherRight input[type=number]:focus,
+        #fatherLeft input[type=text]:focus,
+        #fatherLeft input[type=number]:focus,
+        #motherRight input[type=text]:focus,
+        #motherRight input[type=number]:focus,
+        #motherLeft input[type=text]:focus,
+        #motherLeft input[type=number]:focus,
+        #gurdianRight input[type=text]:focus,
+        #gurdianRight input[type=number]:focus,
+        #gurdianLeft input[type=text]:focus,
+        #gurdianLeft input[type=number]:focus {
+            background-color: #ccc;
+            outline: none;
+        }
+
+        /* DROP DOWN LEARNER SHS CSS*/
+        .dropbtn {
+            margin-top: 10px;
+            background-color: #00703C;
+            color: white;
+            padding: 8px 12px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            border-radius: 5px;
+            display: none;
+            position: absolute;
+            background-color: #f5f1f1;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-content a {
+            color: #00703C;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #a6a6a6;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #008849;
+        }
+
+        :root {
+            --green: #2f5d3a;
+            --gray: #cfcfcf;
+        }
+
+        .stepper {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Background line */
+        .stepper-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gray);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* Animated filled line */
+        .stepper-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--green);
+            transform: translateY(-50%);
+            transition: width 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Circles */
+        .stepp {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--gray);
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        /* Current step */
+        .stepp.active {
+            border-color: var(--green);
+        }
+
+        /* Completed step */
+        .stepp.completed {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .perma {
+            margin: 10px 20px;
+
+        }
+
+        #subBtn{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="img-div"><img src="Lagro_High_School_logo.png" alt="" width="100%" height="100%"></div>
+        <div id="name-div">
+            <p>Department of Education</p>
+            <p>Schools Division Office - Quezon City</p>
+            <span>LAGRO HIGH SCHOOL</span>
+        </div>
+        <div id="search-div">
+            <input type="search" name="search" id="search">
+        </div>
+    </header>
+    <div id="buttons">
+        <nav>
+            <input type="button" value="PRE-ENROLLMENT">
+            <input type="button" value="ORGANIZATIONAL CHART" onclick="org()">
+            <input type="button" value="NEWS" onclick="news()">
+            <input type="button" value="ANNOUNCEMENTS">
+            <input type="button" value="ABOUT">
+            <input type="button" value="CONTACT US">
+            <input type="button" value="MISSION & VISION">
+        </nav>
+    </div>
+
+    <div class="stepper">
+        <div class="stepper-track"></div>
+        <div class="stepper-progress"></div>
+
+        <div class="stepp active"></div>
+        <div class="stepp"></div>
+        <div class="stepp"></div>
+        <div class="stepp"></div>
+        <div class="stepp"></div>
+    </div>
+
+    <div id="mainContainer" class="step active">
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <h2 style="
+        font-family: headingbold; 
+        color: #2d5630; 
+        letter-spacing: 1px;
+        margin: 0px 0 0 30px;">LEARNER INFORMATION</h2>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <div id="formBox">
+            <div id="rightForm">
+                <form id="form" action="form.php" method="post">
+                    <label for="LRN">Learner Reference No.</label><br>
+                    <input type="number" name="LRN" id="LRN" required><br><br>
+                    <span id="lrnMsg"></span>
+
+                    <label for="firstName">First Name </label><br>
+                    <input type="text" name="firstName" id="firstName" required><br><br>
+
+                    <label for="lastName">Last Name </label><br>
+                    <input type="text" name="lastName" id="lastName" required><br><br>
+
+                    <label for="middleName">Middle Name </label><br>
+                    <input type="text" name="middleName" id="middleName" required><br><br>
+
+                    <label for="extName">Extensions (Jr., Sr.) </label><br>
+                    <input type="text" name="extName" id="extName"><br><br>
+
+                    <label for="bday">Birthday </label><br>
+                    <input type="date" name="bday" id="bday" required><br><br>
+
+                    <div class="age-sex-row">
+                        <div class="age-field">
+                            <label for="age">Age</label><br>
+                            <input type="number" name="age" id="age" required>
+                        </div>
+                        <div class="sex-field">
+                            <label>Sex</label><br>
+                            <label class="radioContainer"> Male
+                                <input type="radio" name="sex" value="male" required>
+                                <span class="radio"></span>
+                            </label>
+                            <label class="radioContainer"> Female
+                                <input type="radio" name="sex" value="female" required>
+                                <span class="radio"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <label for="mTongue">Mother Tongue</label><br>
+                    <input type="text" name="mTongue" id="mTongue" required><br><br>
+            </div>
+
+            <div id="leftForm">
+                <label for="IndigenousP">Belonging to any Indigenous Peoples (IP) Community/Indigenous Cultural
+                    Community?</label><br>
+                <label class="checkBoxContainer">
+                    <label class="radioContainer"> Yes
+                        <input type="radio" id="yes1" name="IndigenousP" value="Yes" onclick="IndigenousYes()">
+                        <span class="radio"></span>
+                    </label>
+
+                    <label class="radioContainer"> No
+                        <input type="radio" id="no1" name="IndigenousP" value="No" onclick="IndigenousNo()">
+                        <span class="radio"></span>
+                    </label>
+                </label><br><br>
+
+                <label for="IndigenousP">If yes, please specify</label><br>
+                <input type="text" name="yesSpecify" id="yesSpecify"><br><br>
+
+                <label for="4ps">Is your family a beneficiary of 4Ps?</label><br>
+                <label class="checkBoxContainer">
+                    <label class="radioContainer"> Yes
+                        <input type="radio" id="yes2" name="4Ps" value="Yes" onclick="fourPsYes()">
+                        <span class="radio"></span>
+                    </label>
+
+                    <label class="radioContainer"> No
+                        <input type="radio" id="no2" name="4Ps" value="No" onclick="fourPsNo()">
+                        <span class="radio"></span>
+                    </label>
+                </label><br><br>
+
+                <label for="4ps">If Yes, write the 4Ps Household ID Number below</label><br>
+                <input type="text" name="yesSpecifys" id="yesSpecify4ps"><br><br>
+
+                <label for="disability">Is the child a Learner with Disability?</label><br>
+                <label class="checkBoxContainer">
+                    <label class="radioContainer"> Yes
+                        <input type="radio" id="yes" name="disability" onclick="Yes()" value="Yes" required>
+                        <span class="radio"></span>
+                    </label>
+
+                    <label class="radioContainer"> No
+                        <input type="radio" id="no" name="disability" onclick="No()" value="No" required>
+                        <span class="radio"></span>
+                    </label>
+                </label><br><br>
+
+                <label for="disability">If Yes, specify the type of disability</label><br>
+                <div id="disabilityContainer">
+                    <div id="rightCheckBox">
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" class="disa" name="check[]" value="Visual Impairment" onclick="visualShow()">
+                            Visual Impairment
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="optionBox" id="visual-show">
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" class="disa" name="check[]" value="a. Blind"> a. Blind
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" class="disa" name="check[]" value="b. Low Vision"> b. Low Vision
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Hearing Impairment"> Hearing Impairment
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Learning Disability"> Learning Disability
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Intellectual Disability"> Intellectual
+                            Disability
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Orthopedic/Physical Handicap">
+                            Orthopedic/Physical Handicap
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div id="leftCheckBox">
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Speech/Language Disorder"> Speech/Language
+                            Disorder
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Cerebral Palsy"> Cerebral Palsy
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Emotional- Behavioral Disorder"> Emotional-
+                            Behavioral Disorder
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Autism Spectrum Disorder"> Autism Spectrum
+                            Disorder
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Special Health Problem/ Chronic Disease"
+                                onclick="cDisease()">
+                            Special Health Problem/ Chronic Disease
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="optionBox" id="cDiseaseOption">
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="check[]" class="disa" value="a. cancer"> a. cancer
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <label class="checkBoxcontainer">
+                            <input type="checkbox" name="check[]" class="disa" value="Multiple Disorder"> Multiple Disorder
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- ADDRESS FORM -->
+
+    <div id="mainContainer" class="step">
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <h2 style="
+        font-family: headingbold; 
+        color: #2d5630; 
+        letter-spacing: 1px;
+        margin: 0px 0 0 30px;">CURRENT ADDRESS</h2>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <div id="addressBox">
+            <div id="addressRight">
+                <label for="houseNo" required>House No.</label><br>
+                <input type="text" name="houseNo" id="houseNo" required><br><br>
+
+                <label for="street">Sitio/Street Name</label><br>
+                <input type="text" name="street" id="street" required><br><br>
+
+                <label for="barangay">Barangay</label><br>
+                <input type="text" name="barangay" id="barangay" required><br><br>
+
+                <label for="city">Municipality/City</label><br>
+                <input type="text" name="city" id="city" required><br><br>
+            </div>
+            <div id="addressLeft">
+                <label for="province">Province</label><br>
+                <input type="text" name="province" id="province" required><br><br>
+
+                <label for="country">Country</label><br>
+                <input type="text" name="country" id="country" required><br><br>
+
+                <label for="zipcode">Zipcode</label><br>
+                <input type="number" name="zipcode" id="zipcode" required><br><br>
+
+            </div>
+        </div>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <div class="perma">
+            <h3 style="
+            font-family: headingbold; 
+            color: #2d5630; 
+            letter-spacing: 1px;">Permanent Address</h3>
+            <label for="permAddress">Same with your Current Address?</label>
+            <label class="checkBoxContainer">
+                <label class="radioContainer"> Yes
+                    <input type="radio" name="permAddress" value="Yes" onclick="yesAdd()" required>
+                    <span class="radio"></span>
+                </label>
+
+                <label class="radioContainer"> No
+                    <input type="radio" name="permAddress" value="No" onclick="noAdd()" required>
+                    <span class="radio"></span>
+                </label>
+            </label>
+        </div>
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <div id="addressBox">
+            <div id="addressRight">
+                <label for="houseNo">House No.</label><br>
+                <input type="text" name="permhouseNo" id="houseNoP" required><br><br>
+
+                <label for="street">Sitio/Street Name</label><br>
+                <input type="text" name="permstreet" id="streetP" required><br><br>
+
+                <label for="barangay">Barangay</label><br>
+                <input type="text" name="permbarangay" id="barangayP" required><br><br>
+
+                <label for="city">Municipality/City</label><br>
+                <input type="text" name="permcity" id="cityP" required><br><br>
+            </div>
+            <div id="addressLeft">
+                <label for="province">Province</label><br>
+                <input type="text" name="permprovince" id="provinceP" required><br><br>
+
+                <label for="country">Country</label><br>
+                <input type="text" name="permcountry" id="countryP" required><br><br>
+
+                <label for="zipcode">Zipcode</label><br>
+                <input type="number" name="permzipcode" id="zipcodeP" required><br><br>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- PARENT/GURDIAN FORM -->
+    <div id="mainContainer" class="step">
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <h2 style="
+        font-family: headingbold; 
+        color: #2d5630; 
+        letter-spacing: 1px;
+        margin: 0px 0 0 30px;"> PARENT'S/GURDIAN'S INFORMATION</h2>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <h3 style="
+            font-family: headingbold; 
+            color: #2d5630; 
+            letter-spacing: 1px;
+            margin: 0 0 0 30px;">Father's Information: </h3>
+        <div id="fatherContainer">
+            <!--FATHER INFO-->
+            <div id="fatherRight">
+                <label for="fatherLN">Last Name</label><br>
+                <input type="text" name="fatherLN" id="fatherLN" required><br><br>
+
+                <label for="fatherFN">First Name</label><br>
+                <input type="text" name="fatherFN" id="fatherFN" required><br><br>
+            </div>
+            <div id="fatherLeft">
+                <label for="fatherMN">Middle Name</label><br>
+                <input type="text" name="fatherMN" id="fatherMN" required><br><br>
+
+                <label for="fatherContact">Contact Number</label><br>
+                <input type="number" name="fatherContact" id="fatherContact" required><br><br>
+            </div>
+        </div>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <h3 style="
+            font-family: headingbold; 
+            color: #2d5630; 
+            letter-spacing: 1px;
+            margin: 0 0 0 30px;">Mother's Legal Information: </h3>
+        <div id="motherContainer">
+
+            <div id="motherRight">
+                <label for="motherLN">Last Name</label><br>
+                <input type="text" name="motherLN" id="motherLN" required><br><br>
+
+                <label for="motherFN">First Name</label><br>
+                <input type="text" name="motherFN" id="motherFN" required><br><br>
+            </div>
+            <div id="motherLeft">
+                <label for="motherMN">Middle Name</label><br>
+                <input type="text" name="motherMN" id="motherMN" required><br><br>
+
+                <label for="motherContact">Contact Number</label><br>
+                <input type="number" name="motherContact" id="motherContact" required><br><br>
+            </div>
+        </div>
+
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <!--GURDIAN INFO-->
+        <h3 style="
+            font-family: headingbold; 
+            color: #2d5630; 
+            letter-spacing: 1px;
+            margin: 0 0 0 30px;">Gurdian's Legal Information: </h3>
+        <div id="gurdianContainer">
+
+            <div id="gurdianRight">
+                <label for="gurdianLN">Last Name</label><br>
+                <input type="text" name="gurdianLN" id="gurdianLN" required><br><br>
+
+                <label for="gurdianFN">First Name</label><br>
+                <input type="text" name="gurdianFN" id="gurdianFN" required><br><br>
+            </div>
+            <div id="gurdianLeft">
+                <label for="gurdianMN">Middle Name</label><br>
+                <input type="text" name="gurdianMN" id="gurdianMN" required><br><br>
+
+                <label for="gurdianContact">Contact Number</label><br>
+                <input type="number" name="gurdianContact" id="gurdianContact" required><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- BALIK ARAL -->
+    <div id="mainContainer" class="step">
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <h2 style="
+        font-family: headingbold; 
+        color: #2d5630; 
+        letter-spacing: 1px;
+        margin: 0px 0 0 30px;">FOR RETURNING LEARNER (BALIK-ARAL) AND THOSE WHO WILL TRANSFER/MOVE IN</h2>
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+
+        <div id="balikAralContainer">
+            <div id="balikAralRight">
+                <label for="lastGrade">Last Grade Level Complete</label><br>
+                <input type="text" name="lastGradeLvl" id="lastGradeLvl"><br><br>
+
+                <label for="lastSchool">Last School Attended</label><br>
+                <input type="text" name="lastSchool" id="lastSchool"><br><br>
+            </div>
+            <div id="balikAralLeft">
+                <label for="lastSY">Last School Year Attended</label><br>
+                <input type="text" name="lastSY" id="lastSY"><br><br>
+
+                <label for="schoolID">School ID</label><br>
+                <input type="number" name="schoolID" id="schoolID"><br><br>
+            </div>
+        </div>
+    </div>
+    <!-- LEANERS SHS -->
+
+    <div id="mainContainer" class="step">
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <h2 style="
+        font-family: headingbold; 
+        color: #2d5630; 
+        letter-spacing: 1px;
+        margin: 0px 0 0 30px;">FOR LEARNER'S IN SENIOR HIGH SCHOOL</h2>
+        <hr style="width: 100%; border: 1px solid #2d5630; margin: 10px auto;">
+        <div id="shsContainer">
+            <div id="shsRight">
+                <label for="track">Track</label><br>
+                <input type="text" name="track" id="track" required><br><br>
+
+                <label for="strand">Strand</label><br>
+                <input type="text" name="strand" id="strand" required><br><br>
+
+                <label>Semester</label><br>
+                <label class="checkBoxContainer">
+                    <label class="radioContainer"> 1st
+                        <input type="radio" name="Semester" value="1st" required>
+                        <span class="radio"></span>
+                    </label>
+
+                    <label class="radioContainer"> 2nd
+                        <input type="radio" name="Semester" value="2nd" required>
+                        <span class="radio"></span>
+                    </label>
+                </label><br><br>
+            </div>
+            <div id="shsLeft">
+                <label for="distanceLearn">If school will implement other
+                    distance learning modalities aside from face-to-face instruction,
+                    what would you prefer for your child? </label><br>
+                <div class="dropdown">
+                    <div id="disabilityContainer">
+                        <div id="rightCheckBox">
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Modular (Print)"> Modular (Print)
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Modular (Digital)"> Modular (Digital)
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Online"> Online
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Radio-Based Instruction"> Radio-Based
+                                Instruction
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Educational Television"> Educational
+                                Television
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Homeschooling"> Homeschooling
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkBoxcontainer">
+                                <input type="checkbox" name="learn[]" value="Blended"> Blended
+                                <span class="checkmark"></span>
+                            </label>
+
+                            <input type="hidden" id="id" name="id">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="buttonBox">
+        <button type="button" id="nextBtn">Next</button>
+        <button type="submit" name="sub" id="subBtn">Submit</button>
+        <button type="button" id="prevBtn">Previous</button>
+    </div>
+    </form>
+    <script src="form.js"></script>
+    <script src="generateId.js"></script>
+    <script src="button.js"></script>
+
+    <footer>
+        <div class="footer-main">
+            <div id="footer1">
+                <img src="Lagro_High_School_logo.png" alt="" width="90px" height="90px">
+                <p id="footer-name-school">LAGRO HIGH SCHOOL</p>
+                <p id="footer-address-school">Misa de Gallo St. corner Ascension Ave., Barangay Greater Lagro,
+                    Novaliches, Quezon City, Metro Manila, Philippines </p>
+            </div>
+            <div id="footer2">
+                <p id="footer-quick-link">Quick Links</p>
+                <ul>
+                    <li><a href="#">Quick Link</a></li>
+                    <li><a href="#">Quick Link</a></li>
+                    <li><a href="#">Quick Link</a></li>
+                    <li><a href="#">Quick Link</a></li>
+                    <li><a href="#">Quick Link</a></li>
+                    <li><a href="#">Quick Link</a></li>
+                </ul>
+            </div>
+            <div id="footer3">
+                <p id="footer-socials">Socials</p>
+                <div class="logo-icon">
+                    <div id="logo"></div>
+                    <div id="logo"></div>
+                    <div id="logo"></div>
+                    <div id="logo"></div>
+                    <div id="logo"></div>
+                </div>
+                <p id="footer-contact">Contact Us</p>
+                <p id="sub-contact">
+                    +63 987 654 3210 <br>
+                    +63 987 654 3210 <br>
+                    lagrohs2026@gmail.com
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

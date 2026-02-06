@@ -1,0 +1,156 @@
+@font-face {
+    font-family: headingregular;
+    src: url(HeadingNowTrial-64Regular.ttf);
+}
+@font-face {
+    font-family: headingmedium;
+    src: url(HeadingNowTrial-65Medium.ttf);
+}
+@font-face {
+    font-family: headingbold;
+    src: url(HeadingNowTrial-66Bold.ttf);
+}
+@font-face {
+    font-family: headingextrabold;
+    src: url(HeadingNowTrial-67Extrabold.ttf);
+}
+@font-face {
+    font-family: headingheavy;
+    src: url(HeadingNowTrial-68Heavy.ttf);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: century gothic;
+}
+header {
+    width: 100%;
+    background-color:#008849;
+    display: flex;
+    padding: 10px 15px;
+}
+#img-div{
+    width: 100px;
+    height: 100px;
+}
+#name-div{
+    height: fit-content;
+    margin: auto 10px;
+    color: white;
+}
+    #name-div p{
+      font-family: headingregular;
+      line-height: 0.3;
+    }
+    #name-div span{
+      line-height: 0.5;
+      font-family: headingheavy;
+      font-size: 38px;
+      letter-spacing: 1px;
+    }   
+#search-div{
+    margin: auto 10px auto auto;
+    width: 290px;
+    display: flex;
+}
+#search-div input[type=search]{
+    padding: 8px 5px 8px 40px;
+    border: none;
+    border-radius: 20px;
+    background-image: url('magnifying-glass-solid-full.svg');
+    background-position: 8px 9px; 
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 290px;
+}
+#buttons{
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+}
+header{
+    top: 0;
+    z-index: 99;
+    position: sticky;
+}
+nav{
+    display: flex;
+}
+nav input[type=button]{
+    flex: 1;
+    padding: 1rem;
+    padding: 8px 12px;
+    margin: 0px auto 0px -5px;
+    border-left: 1px solid #008849;
+    border-right: 1px solid #008849;
+    border-bottom: none;
+    border-top: none;
+    width: 184.05px;
+    background-color:#00703C;
+    color: white;
+    justify-content: center;
+    font-family: headingregular;
+    font-size: 13px;
+}
+
+/* footer css */
+
+.footer-main{
+    display: flex;
+    width: 100%;
+    background-color: #008849;
+    padding: 30px 40px;
+}
+#footer1{
+    margin-right: 100px;
+}
+#footer1, #footer2, #footer3{
+    width: 100%;
+}
+#footer-name-school{
+    font-family: headingbold;
+    color: white;
+    font-size: 30px;
+    line-height: 0;
+    margin-top: 30px;
+}
+#footer-address-school{
+    font-family: headingregular;
+    color: white;
+}
+#footer-quick-link, #footer-socials, #footer-contact{
+    font-family: headingbold;
+    color: white;
+    font-size: 20px;
+}
+#footer-quick-link{
+    padding-left: 30px;
+}
+ul li{
+    text-decoration: none;
+    list-style: none;
+    font-family: headingregular;
+    line-height: 1.8;
+}
+ul li a{
+    color: white;
+    text-decoration: none;
+}
+#footer3{
+    color: white;
+}
+.logo-icon{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#logo{
+    background-color: rgba(0, 0, 0, 0.289);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+   
+}
